@@ -1,0 +1,36 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+src/main/resources/assets/cways_randoms
+/build.gradle
+/CREDITS-fml.txt
+/forge-1.7.10-10.13.3.1408-1.7.10-changelog.txt
+/forge-1.9.4-12.17.0.1968-changelog.txt
+/gradlew
+/gradlew.bat
+/LICENSE-fml.txt
+/MinecraftForge-Credits.txt
+/MinecraftForge-License.txt
+/Paulscode IBXM Library License.txt
+/Paulscode SoundSystem CodecIBXM License.txt
+/README.txt
+/gradle/

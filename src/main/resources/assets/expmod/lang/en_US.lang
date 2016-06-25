@@ -1,0 +1,36 @@
+#====================
+# Blocks
+#====================
+
+tile.dummyBlock.name=Dummy Block
+
+#====================
+# Items
+#====================
+
+item.mysticalPaper0.name=Mystical Paper
+item.mysticalPaper1.name=Enchanted Paper
+item.mysticalPaper2.name=Enchanted Paper Stack
+item.mysticalPaper3.name=Enhanced Paper
+
+item.dragonBall.name=Dragon Ball
+
+#====================
+# Text
+#====================
+
+expmod.inst0=The paper seems drawn towards the nearest enchantment table.
+expmod.inst1=The papers seems to react to one another, perhaps you should try to craft a bunch of them together.
+expmod.inst2=The stack pulsates with energy, seeming to draw the EXP right out of you. One last visit to the Enchantment Table should do the trick.
+
+expmod.fail0=There doesn't seem to be enough force, perhaps you require some EXP.
+expmod.fail1=The stack resonates with the enchantment table, but the table fails to respond. Perhaps a lapis coating is needed.
+expmod.fail2=The table tries to react, but there isn't enough force being it. Perhaps you need more EXP.
+
+#====================
+# Entities
+#====================
+
+#====================
+# Misc
+#====================
