@@ -3,6 +3,7 @@ package coolway99.experiencemod.proxy;
 import coolway99.experiencemod.enchants.TestEnchant;
 import coolway99.experiencemod.items.ItemManager;
 import coolway99.experiencemod.xp.XpCapability;
+import coolway99.experiencemod.xp.XpMap;
 import coolway99.experiencemod.EventInterface;
 import coolway99.experiencemod.NetworkHandler;
 import coolway99.experiencemod.RecipeHandler;

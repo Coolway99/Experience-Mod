@@ -1,21 +1,35 @@
 package coolway99.experiencemod.xp;
 
 import coolway99.experiencemod.NetworkHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.profiler.Profiler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class XpHandlerClient extends XpHandler{
+	
+	private static final String xpBar = "expBar";
+	private static final String xpLevel = "expLevel";
 
 	public XpHandlerClient(EntityPlayer player){
 		super(player);
 		System.out.println("This is a client handler");
 		this.level = -26;
 		this.experience = -53;
+	}
+	
+	public void renderXpBar(ScaledResolution res){
+		Profiler prof = Minecraft.getMinecraft().mcProfiler;
+		prof.startSection(xpBar); //Unsure what these are for, but I'll use them anyways
+		XpGUI.drawBar(res, this);
+		prof.endStartSection(xpLevel);
+		XpGUI.drawNum(res, this);
+		prof.endSection();
+		XpGUI.update();
 	}
 	
 	@Override
@@ -25,7 +39,7 @@ public class XpHandlerClient extends XpHandler{
 	
 	@Override
 	public void updatePlayerExp(){
-		this.updatePlayerExpNoSync();
+		//this.updatePlayerExpNoSync();
 	}
 	
 	@Override
@@ -46,7 +60,7 @@ public class XpHandlerClient extends XpHandler{
 	
 	@Override
 	public void onDeath(){
-		this.sync();
+		//this.sync();
 	}
 	
 	@Override
@@ -57,11 +71,5 @@ public class XpHandlerClient extends XpHandler{
 	@Override
 	public void onXpLevel(int levels){
 		//Unused
-	}
-	
-	@Override
-	public IMessage onMessage(XpHandler message, MessageContext ctx){
-		System.out.println("Message got on client");
-		return super.onMessage(message, ctx);
 	}
 }

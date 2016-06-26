@@ -26,7 +26,7 @@ public class XpHandler implements INBTSerializable<NBTTagCompound>, IMessage, IM
 	protected int level;
 	protected int experience;
 	
-	//This should never be "called"
+	//This should only be called when this is a message handler
 	public XpHandler(){
 		this.player = null;
 	}
@@ -46,7 +46,7 @@ public class XpHandler implements INBTSerializable<NBTTagCompound>, IMessage, IM
 	@Override
 	public NBTTagCompound serializeNBT(){
 		NBTTagCompound data = new NBTTagCompound();
-		data.setInteger(levelKey, 5);
+		data.setInteger(levelKey, this.level);
 		data.setInteger(experienceKey, this.experience);
 		return data;
 	}
@@ -61,15 +61,16 @@ public class XpHandler implements INBTSerializable<NBTTagCompound>, IMessage, IM
 	}
 	
 	public void updatePlayerExp(){
-		this.updatePlayerExpNoSync();
+		//this.updatePlayerExpNoSync();
 		this.sync();
 	}
 	
 	protected void updatePlayerExpNoSync(){
 		if(this.player == null) return;
-		this.player.experience = (float) this.experience / 10;
+		int xpForLevel = XpMap.getExpForLevel(this.level);
+		this.player.experience = (float) this.experience / xpForLevel;
 		this.player.experienceLevel = this.level;
-		this.player.experienceTotal = this.experience + (this.level * 10);
+		this.player.experienceTotal = this.experience + XpMap.getExpAllLevels(this.level);
 	}
 	
 	public void sync(){
@@ -80,19 +81,20 @@ public class XpHandler implements INBTSerializable<NBTTagCompound>, IMessage, IM
 	
 	public void onXpAdd(int amount){
 		this.experience += amount;
-		if(this.experience > 10){
-			this.onXpLevel(this.experience/10);
-			this.experience %= 10;
+		while(this.experience >= XpMap.getExpForLevel(this.level)){
+			this.experience -= XpMap.getExpForLevel(this.level++);
 		}
 		this.updatePlayerExp();
 	}
 	
 	public void onXpLevel(int levels){
-		this.level += levels;
+		this.experience = (int) (((float)this.experience/XpMap.getExpForLevel(this.level))
+				* XpMap.getExpForLevel(this.level += levels)); 
 		this.updatePlayerExp();
 	}
 	public void onDeath(){
-		
+		this.level -= 5;
+		this.updatePlayerExp();
 	}
 	
 	@Override
@@ -112,8 +114,10 @@ public class XpHandler implements INBTSerializable<NBTTagCompound>, IMessage, IM
 		System.out.println("We got a message");
 		System.out.println("We have player "+this.player);
 		System.out.println("The message has player "+message.player+" with playername "+message.playerName);
-		Minecraft.getMinecraft().thePlayer.getCapability(XpCapability.INSTANCE, null).getHandler().updatePlayerExpNoSync();
-		this.updatePlayerExp();
+		XpHandler handler = Minecraft.getMinecraft().thePlayer.getCapability(XpCapability.INSTANCE, null).getHandler();
+		handler.level = message.level;
+		handler.experience = message.experience;
+		handler.updatePlayerExpNoSync();
 		return null;
 	}
 	
