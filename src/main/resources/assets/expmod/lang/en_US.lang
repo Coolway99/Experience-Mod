@@ -2,7 +2,8 @@
 # Blocks
 #====================
 
-tile.dummyBlock.name=Dummy Block
+tile.expmod.dummyBlock.name=Dummy Block
+tile.expmod.transformer.name=Transformer
 
 #====================
 # Items

@@ -1,6 +1,5 @@
 package coolway99.experiencemod.xp;
 
-import coolway99.experiencemod.NetworkHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,22 +13,22 @@ public class XpHandlerClient extends XpHandler{
 	
 	private static final String xpBar = "expBar";
 	private static final String xpLevel = "expLevel";
-
+	private final XpGUI gui;
+	
 	public XpHandlerClient(EntityPlayer player){
 		super(player);
-		System.out.println("This is a client handler");
-		this.level = -26;
-		this.experience = -53;
+		this.gui = new XpGUI(this);
 	}
 	
 	public void renderXpBar(ScaledResolution res){
+		if(this.player.isCreative() || this.player.isSpectator()) return;
 		Profiler prof = Minecraft.getMinecraft().mcProfiler;
 		prof.startSection(xpBar); //Unsure what these are for, but I'll use them anyways
-		XpGUI.drawBar(res, this);
+		this.gui.drawBar(res);
 		prof.endStartSection(xpLevel);
-		XpGUI.drawNum(res, this);
+		this.gui.drawNum(res);
 		prof.endSection();
-		XpGUI.update();
+		this.gui.update();
 	}
 	
 	@Override
@@ -44,13 +43,7 @@ public class XpHandlerClient extends XpHandler{
 	
 	@Override
 	public void sync(){
-		System.out.println("Sending out a ping");
-		NetworkHandler.INSTANCE.sendToServer(this);
-	}
-	
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt){
-		//Unused, the client only syncs to the server
+		//Unused client-side
 	}
 	
 	@Override

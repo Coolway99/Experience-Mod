@@ -14,10 +14,14 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class XpCapability implements ICapabilitySerializable<NBTTagCompound>{
 	
+	@CapabilityInject(XpHandler.class) //TODO perhaps change the class to itself
+	public static final Capability<XpCapability> INSTANCE = null;
+	
+	private static final String handlerTypeKey = "handlerType"; //TODO
+	private static final String handlerKey = "handler";
+	private static final String invKey = "inventory"; //TODO
 	private final XpHandler handler;
 	
-	@CapabilityInject(XpHandler.class)
-	public static final Capability<XpCapability> INSTANCE = null;
 	
 	public XpCapability(EntityPlayer player){
 		if(player.worldObj.isRemote){
@@ -40,12 +44,14 @@ public class XpCapability implements ICapabilitySerializable<NBTTagCompound>{
 
 	@Override
 	public NBTTagCompound serializeNBT(){
-		return this.handler.serializeNBT();
+		NBTTagCompound data = new NBTTagCompound();
+		data.setTag(handlerKey, this.handler.serializeNBT());
+		return data;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt){
-		this.handler.deserializeNBT(nbt);
+		this.handler.deserializeNBT(nbt.getCompoundTag(handlerKey));
 	}
 	
 	public void tick(){
@@ -61,7 +67,7 @@ public class XpCapability implements ICapabilitySerializable<NBTTagCompound>{
 	}
 	
 	public static void register(){
-		CapabilityManager.INSTANCE.register(XpHandler.class,
+		CapabilityManager.INSTANCE.register(XpHandler.class, //TODO see TODO at the top
 				(new IStorage<XpHandler>(){
 					@Override
 					public NBTBase writeNBT(Capability<XpHandler> capability, XpHandler instance,

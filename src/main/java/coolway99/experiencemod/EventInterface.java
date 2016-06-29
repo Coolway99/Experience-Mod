@@ -3,7 +3,6 @@ package coolway99.experiencemod;
 import coolway99.experiencemod.xp.XpCapability;
 import coolway99.experiencemod.xp.XpHandlerClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -31,11 +30,10 @@ public class EventInterface{
 	
 	@SubscribeEvent
 	public void onPlayerJoin(EntityJoinWorldEvent event){
-		if(!(event.getEntity() instanceof EntityPlayerSP)) return; //Only run client-side on players
+		if(!(event.getEntity() instanceof EntityPlayer)) return;
 		EntityPlayer player = (EntityPlayer) event.getEntity();
 		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
-		//Since it's XpHandlerClient, this will ping the server
-		player.getCapability(XpCapability.INSTANCE, null).getHandler().sync(); 
+		player.getCapability(XpCapability.INSTANCE, null).getHandler().ping(); 
 	}
 	
 	@SubscribeEvent
@@ -47,7 +45,7 @@ public class EventInterface{
 	
 	@SubscribeEvent
 	public void onXpPickup(PlayerPickupXpEvent event){
-		System.out.println(event.getEntityPlayer().getName()+" picked up an exp orb!");
+		//System.out.println(event.getEntityPlayer().getName()+" picked up an exp orb!");
 	}
 	
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
@@ -68,13 +66,17 @@ public class EventInterface{
 	
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){
-		if(!event.isWasDeath()) return; //The player only switched dimensions
-		//Otherwise the player died
+		System.out.println("The player either died or returned from the end");
 		EntityPlayer original = event.getOriginal();
-		if(!original.hasCapability(XpCapability.INSTANCE, null)) return;
+		if(original.worldObj.isRemote || !original.hasCapability(XpCapability.INSTANCE, null)) return;
 		XpCapability cap = event.getEntityPlayer().getCapability(XpCapability.INSTANCE, null);
 		cap.deserializeNBT(original.getCapability(XpCapability.INSTANCE, null).serializeNBT());
-		cap.onDeath();
+		if(event.isWasDeath()){
+			//The player died
+			cap.onDeath();
+		}
+		//Otherwise the player only switched dimensions
+		cap.getHandler().ping();
 	}
 	
 	@SideOnly(Side.CLIENT)
