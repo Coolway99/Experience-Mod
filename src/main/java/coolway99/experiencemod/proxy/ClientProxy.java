@@ -1,7 +1,6 @@
 package coolway99.experiencemod.proxy;
 
-import coolway99.experiencemod.items.ItemManager;
-import coolway99.experiencemod.xp.XpGUI;
+import coolway99.experiencemod.items.ModItemManager;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -15,7 +14,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void preInit(FMLPreInitializationEvent event){
 		super.preInit(event);
-		ItemManager.initModels();
+		ModItemManager.initModels();
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemManager{
+public class ModItemManager{
 	
 	public static ItemMysticalPaper mysticalPaper;
 	public static Item modBook;

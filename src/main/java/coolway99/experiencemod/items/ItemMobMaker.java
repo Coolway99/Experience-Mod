@@ -15,10 +15,12 @@ public class ItemMobMaker extends IItemMod{
 		super(uniqueName);
 	}
 	
+	
+	//Testing mob spawning
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world,
 			BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-		if(!world.isRemote) return EnumActionResult.SUCCESS;
+		if(world.isRemote) return EnumActionResult.PASS;
 		EntityCreeper creeper = new EntityCreeper(world);
 		creeper.setLocationAndAngles(pos.getX()+hitX, pos.getY()+hitY, pos.getZ()+hitZ, 0, 0);
 		world.spawnEntityInWorld(creeper);

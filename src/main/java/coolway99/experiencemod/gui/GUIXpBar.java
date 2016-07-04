@@ -1,5 +1,7 @@
-package coolway99.experiencemod.xp;
+package coolway99.experiencemod.gui;
 
+import coolway99.experiencemod.xp.XpHandlerClient;
+import coolway99.experiencemod.xp.XpMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -8,15 +10,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class XpGUI extends Gui{
+public class GUIXpBar extends Gui{
 	
-	private static final int enderColor = 0xFFAA00AA;
-	private static final int xpColor = 0xFF00CC00;
+	private static final int enderColor = 0xFF_AA_00_AA;
+	private static final int xpColor = 0xFF_00_CC_00;
+	private static final int BLACK = 0xFF_00_00_00;
 	
 	private final FontRenderer font;
 	private final XpHandlerClient xp;
 	
-	public XpGUI(XpHandlerClient xp){
+	public GUIXpBar(XpHandlerClient xp){
 		this.font = Minecraft.getMinecraft().fontRendererObj;
 		this.xp = xp;
 	}
@@ -37,12 +40,11 @@ public class XpGUI extends Gui{
 		int enderWidth = this.font.getStringWidth(Integer.toString(this.xp.enderLevel));
 		int x = ((res.getScaledWidth()-enderWidth)/2)-levelWidth;
 		int y = res.getScaledHeight() - 40;
-		drawInt(this.xp.level, x+1, y, 0xFF000000);
+		drawInt(this.xp.level, x+1, y, BLACK);
 		drawInt(this.xp.level, x, y, xpColor);
 		x = x+(3*levelWidth/2)+enderWidth/2; //It just works, ok?
-		drawInt(this.xp.enderLevel, x+1, y, 0xFF000000);
+		drawInt(this.xp.enderLevel, x+1, y, BLACK);
 		drawInt(this.xp.enderLevel, x, y, enderColor);
-		
 		drawInt(this.xp.power, 0, 0, xpColor);
 		drawInt((this.xp.level == 0 ? 0 : this.xp.power/this.xp.level), 0, 10, xpColor);
 		drawInt(XpMap.getPowerForLevel(this.xp.level), 20, 0, xpColor);

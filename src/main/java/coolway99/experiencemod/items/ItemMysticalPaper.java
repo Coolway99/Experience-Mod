@@ -51,7 +51,7 @@ public class ItemMysticalPaper extends IItemSubtypes{
 				player.removeExperienceLevel(10);
 				stack.stackSize--;
 				world.spawnEntityInWorld(new EntityItem(world,
-						pos.getX()+0.5, pos.getY()+1.2, pos.getZ()+0.5, new ItemStack(ItemManager.modBook)));
+						pos.getX()+0.5, pos.getY()+1.2, pos.getZ()+0.5, new ItemStack(ModItemManager.modBook)));
 				break;
 			}
 			default:

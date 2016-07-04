@@ -20,7 +20,7 @@ public class Main{
 	public static final String PROXY_COMMON = MODPATH+".proxy.ClientProxy";
 	public static final String PROXY_SERVER = MODPATH+".proxy.ServerProxy";
 	@Instance
-	public static Main instance = new Main();
+	public static Main INSTANCE = new Main();
 	
 	@SidedProxy(clientSide = PROXY_COMMON, serverSide = PROXY_SERVER)
 	public static CommonProxy proxy;

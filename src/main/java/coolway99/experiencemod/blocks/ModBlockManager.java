@@ -2,7 +2,7 @@ package coolway99.experiencemod.blocks;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockManager{
+public class ModBlockManager{
 	
 	public static DummyBlock dummyBlock;
 	public static BlockTransformer blockTransformer;

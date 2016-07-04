@@ -1,5 +1,6 @@
 package coolway99.experiencemod.xp;
 
+import coolway99.experiencemod.gui.GUIXpBar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,11 +14,11 @@ public class XpHandlerClient extends XpHandler{
 	
 	private static final String xpBar = "expBar";
 	private static final String xpLevel = "expLevel";
-	private final XpGUI gui;
+	private final GUIXpBar gui;
 	
 	public XpHandlerClient(EntityPlayer player){
 		super(player);
-		this.gui = new XpGUI(this);
+		this.gui = new GUIXpBar(this);
 	}
 	
 	public void renderXpBar(ScaledResolution res){
