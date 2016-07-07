@@ -9,13 +9,22 @@ tile.expmod.transformer.name=Transformer
 # Items
 #====================
 
-item.mysticalPaper0.name=Mystical Paper
-item.mysticalPaper1.name=Enchanted Paper
-item.mysticalPaper2.name=Enchanted Paper Stack
-item.mysticalPaper3.name=Enhanced Paper
+item.expmod.mysticalPaper0.name=Mystical Paper
+item.expmod.mysticalPaper1.name=Enchanted Paper
+item.expmod.mysticalPaper2.name=Enchanted Paper Stack
+item.expmod.mysticalPaper3.name=Enhanced Paper
 
-item.dragonBall.name=Dragon Ball
+item.expmod.dragonBall.name=Dragon Ball
+item.expmod.mobMaker.name=Creeper Creator Test Item
 
+item.expmod.mobCharge.0.name=Creeper Charge
+item.expmod.mobCharge.1.name=Zombie Charge
+item.expmod.mobCharge.2.name=Skeleton Charge
+item.expmod.mobCharge.3.name=Enderman Charge
+item.expmod.mobCharge.4.name=
+item.expmod.mobCharge.5.name=
+item.expmod.mobCharge.6.name=
+item.expmod.mobCharge.7.name=
 #====================
 # Text
 #====================

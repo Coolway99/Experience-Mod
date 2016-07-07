@@ -32,15 +32,15 @@ public class EventInterface{
 	public void onPlayerJoin(EntityJoinWorldEvent event){
 		if(!(event.getEntity() instanceof EntityPlayer)) return;
 		EntityPlayer player = (EntityPlayer) event.getEntity();
-		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
-		player.getCapability(XpCapability.INSTANCE, null).getHandler().ping(); 
+		if(!ModUtils.hasXpCap(player)) return;
+		ModUtils.getXpCap(player).getHandler().ping(); 
 	}
 	
 	@SubscribeEvent
 	public void tick(PlayerTickEvent event){
 		EntityPlayer player = event.player;
-		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
-		player.getCapability(XpCapability.INSTANCE, null).tick();
+		if(!ModUtils.hasXpCap(player)) return;
+		ModUtils.getXpCap(player).tick();
 	}
 	
 	@SubscribeEvent
@@ -51,16 +51,16 @@ public class EventInterface{
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onXpAdd(PlayerAddXpEvent event){
 		EntityPlayer player = event.getEntityPlayer();
-		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
-		player.getCapability(XpCapability.INSTANCE, null).onXpAdd(event.getAmount());
+		if(!ModUtils.hasXpCap(player)) return;
+		ModUtils.getXpCap(player).onXpAdd(event.getAmount());
 		event.setCanceled(true);
 	}
 	
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onXpLevel(PlayerChangeLevelEvent event){
 		EntityPlayer player = event.getEntityPlayer();
-		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
-		player.getCapability(XpCapability.INSTANCE, null).onXpLevel(event.getLevels());
+		if(!ModUtils.hasXpCap(player)) return;
+		ModUtils.getXpCap(player).onXpLevel(event.getLevels());
 		event.setCanceled(true);
 	}
 	
@@ -68,9 +68,10 @@ public class EventInterface{
 	public void onPlayerClone(PlayerEvent.Clone event){
 		System.out.println("The player either died or returned from the end");
 		EntityPlayer original = event.getOriginal();
-		if(original.worldObj.isRemote || !original.hasCapability(XpCapability.INSTANCE, null)) return;
-		XpCapability cap = event.getEntityPlayer().getCapability(XpCapability.INSTANCE, null);
-		cap.deserializeNBT(original.getCapability(XpCapability.INSTANCE, null).serializeNBT());
+		if(original.worldObj.isRemote || !ModUtils.hasXpCap(original)) return;
+		//It's safe to say the new player has the cap as well
+		XpCapability cap = ModUtils.getXpCap(event.getEntityPlayer());
+		cap.deserializeNBT(ModUtils.getXpCap(original).serializeNBT());
 		if(event.isWasDeath()){
 			//The player died
 			cap.onDeath();
@@ -85,10 +86,10 @@ public class EventInterface{
 		if(event.getType() != ElementType.EXPERIENCE) return;
 		//Since this only takes place on the client, it's easy to shift the context to XpHandler
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if(!player.hasCapability(XpCapability.INSTANCE, null)) return;
+		if(!ModUtils.hasXpCap(player)) return;
 		//We are rendering the XP Bar
 		event.setCanceled(true);
-		((XpHandlerClient) player.getCapability(XpCapability.INSTANCE, null).getHandler())
+		((XpHandlerClient) ModUtils.getXpCap(player).getHandler())
 				.renderXpBar(event.getResolution());
 	}
 }

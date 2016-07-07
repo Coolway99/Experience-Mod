@@ -1,6 +1,11 @@
 package coolway99.experiencemod;
 
+import java.util.Iterator;
+
 import coolway99.experiencemod.xp.XpCapability;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -41,5 +46,23 @@ public class ModUtils{
 				(short) ((color & 0xFF0000) >> 16),
 				(short) ((color & 0xFF00) >> 8),
 				(short) (color & 0xFF)};
+	}
+	
+	//Used for scrubbing an AI of all tasks
+	public static void removeClassFromAI(EntityAITasks tasks, Class<? extends EntityAIBase> clazz){
+		Iterator<EntityAITaskEntry> iterator = tasks.taskEntries.iterator();
+		while(iterator.hasNext()){
+			if(clazz.isInstance(iterator.next())){
+				iterator.remove();
+			}
+		}
+	}
+	
+	public static void clearAI(EntityAITasks tasks){
+		Iterator<?> iterator = tasks.taskEntries.iterator();
+		while(iterator.hasNext()){
+			iterator.next();
+			iterator.remove();
+		}
 	}
 }

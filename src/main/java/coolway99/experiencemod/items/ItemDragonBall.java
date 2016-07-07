@@ -10,12 +10,14 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+//A ball of congealed dragon
 public class ItemDragonBall extends IItemMod{
 
 	public ItemDragonBall(String uniqueName){
 		super(uniqueName);
 	}
 	
+	//This function is just for testing
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand){
 		if(world.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, stack);

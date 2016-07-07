@@ -11,7 +11,7 @@ public abstract class IItemMod extends Item{
 	
 	public IItemMod(String uniqueName){
 		this.setRegistryName(Main.MODID, uniqueName);
-		this.setUnlocalizedName(uniqueName);
+		this.setUnlocalizedName(Main.MODID+'.'+uniqueName);
 	}
 	
 	@SideOnly(Side.CLIENT)
